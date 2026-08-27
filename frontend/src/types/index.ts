@@ -61,7 +61,7 @@ export interface Opportunity {
   vacanciesText: string;
   modality: "Presencial" | "Híbrido" | "100% Remoto";
   deadline: string;
-  difficultyLevel: "Sin experiencia requerida" | "Nivel Inicial" | "Intermedio";
+  difficultyLevel: "Sin experiencia requerida" | "Nivel Inicial" | "Intermedio" | "Nivel Inicial con Inglés";
   heroImage: string;
   badgeColor: string;
   category: string;
