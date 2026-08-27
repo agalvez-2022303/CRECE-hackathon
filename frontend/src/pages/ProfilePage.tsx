@@ -104,7 +104,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F7F4EA] text-stone-900 pb-24 print:bg-white">
+    <div className="min-h-screen bg-[#F7F7F0] text-stone-900 pb-24 print:bg-white">
       <Header isMinor={isMinor} />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">

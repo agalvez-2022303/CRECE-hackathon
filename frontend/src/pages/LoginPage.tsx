@@ -20,6 +20,7 @@ import {
   Lock
 } from "lucide-react";
 import type { UserProfile } from "../types";
+import BrandMark from "../components/BrandMark";
 
 const API = "/api";
 
@@ -79,16 +80,14 @@ export default function LoginPage() {
   const isEmailInput = identifier.includes("@");
 
   return (
-    <div className="min-h-screen bg-[#F7F4EA] text-stone-900 flex flex-col justify-between">
+    <div className="min-h-screen bg-[#F7F7F0] text-stone-900 flex flex-col justify-between">
       
       {/* Top Navbar */}
       <header className="max-w-7xl mx-auto w-full px-6 py-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-500 via-amber-400 to-orange-500 shadow-sm">
-            <Sparkles className="w-6 h-6 text-white" />
-          </div>
+          <BrandMark />
           <div>
-            <span className="text-2xl font-black tracking-tight text-stone-900 font-display">
+            <span className="text-2xl font-black tracking-[0.08em] text-stone-900 font-display">
               CRECE
             </span>
             <span className="block text-[11px] text-orange-600 font-bold tracking-wider uppercase">

@@ -7,7 +7,29 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Coursera & Udemy warmth + Green freshness
+        // CRECE identity — extracted from the illustrated brand mark.
+        // Deep teal carries trust, sage signals growth and bronze adds warmth.
+        stone: {
+          50: '#F7F7F0', 100: '#EEEFE5', 200: '#DDE1D4', 300: '#C6CCBD',
+          400: '#8A958B', 500: '#647268', 600: '#4B5A53', 700: '#354941',
+          800: '#263B36', 900: '#183B45', 950: '#102A31',
+        },
+        emerald: {
+          50: '#EFF6F1', 100: '#DCECE1', 200: '#BED8C5', 300: '#97C1A4',
+          400: '#659977', 500: '#3B735E', 600: '#2B5D4C', 700: '#234B3E',
+          800: '#1A3B32', 900: '#123028',
+        },
+        amber: {
+          50: '#FBF8F0', 100: '#F5EEDC', 200: '#E9D7B6', 300: '#D8B77D',
+          400: '#BE914E', 500: '#A97938', 600: '#895F2B', 700: '#6B4823',
+          800: '#53381E', 900: '#3D2A19', 950: '#271A10',
+        },
+        orange: {
+          50: '#F8F4EC', 100: '#EEE3D2', 200: '#DEC8A7', 300: '#CBA775',
+          400: '#B9864E', 500: '#9B6A36', 600: '#7D532B', 700: '#624121',
+          800: '#4A311B', 900: '#352314',
+        },
+        // Legacy aliases kept for future semantic component work.
         warm: {
           50: '#FDFBF7',
           100: '#FAF5ED',
@@ -50,10 +72,10 @@ module.exports = {
         display: ["Plus Jakarta Sans", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        'soft-card': '0 4px 20px -2px rgba(42, 31, 24, 0.06), 0 2px 6px -1px rgba(42, 31, 24, 0.04)',
-        'soft-hover': '0 12px 30px -4px rgba(42, 31, 24, 0.12), 0 4px 12px -2px rgba(42, 31, 24, 0.08)',
-        'warm-glow': '0 8px 25px -4px rgba(249, 115, 22, 0.25)',
-        'green-glow': '0 8px 25px -4px rgba(46, 139, 87, 0.25)',
+        'soft-card': '0 4px 20px -2px rgba(24, 59, 69, 0.08), 0 2px 6px -1px rgba(24, 59, 69, 0.04)',
+        'soft-hover': '0 18px 36px -10px rgba(24, 59, 69, 0.22), 0 6px 14px -4px rgba(24, 59, 69, 0.08)',
+        'warm-glow': '0 8px 25px -4px rgba(155, 106, 54, 0.25)',
+        'green-glow': '0 8px 25px -4px rgba(59, 115, 94, 0.25)',
       },
       borderRadius: {
         '4xl': '2rem',

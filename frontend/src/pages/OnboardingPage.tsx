@@ -326,7 +326,7 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF9F5] text-stone-900 flex flex-col">
+    <div className="min-h-screen bg-[#F7F7F0] text-stone-900 flex flex-col">
       {/* Progress Header */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200 px-4 py-4 shadow-sm">
         <div className="max-w-3xl mx-auto flex items-center justify-between">

@@ -83,7 +83,7 @@ export default function OpportunityDetailPage() {
           particleCount: 120,
           spread: 80,
           origin: { y: 0.6 },
-          colors: ['#F97316', '#10B981', '#FACC15', '#3B82F6']
+          colors: ['#183B45', '#3B735E', '#D8B77D', '#97C1A4']
         });
       } catch (err) {
         console.log("Confetti trigger:", err);
@@ -96,7 +96,7 @@ export default function OpportunityDetailPage() {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-[#FAF9F5] text-stone-900 pb-24">
+    <div className="min-h-screen bg-[#F7F7F0] text-stone-900 pb-24">
       <Header isMinor={false} />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">

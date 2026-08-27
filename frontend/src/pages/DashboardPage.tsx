@@ -178,7 +178,7 @@ export default function DashboardPage() {
   const featuredOpportunity = matches.length > 0 ? matches[0].opportunity : undefined;
 
   return (
-    <div className="min-h-screen bg-[#FAF9F5] text-stone-900 pb-24">
+    <div className="min-h-screen bg-[#F7F7F0] text-stone-900 pb-24">
       {/* Top Header */}
       <Header isMinor={isMinor} onSearchChange={setSearchTerm} />
 

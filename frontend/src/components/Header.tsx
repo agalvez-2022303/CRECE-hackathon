@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { 
-  Sparkles, 
   LogOut, 
   Briefcase, 
   GraduationCap, 
@@ -16,6 +15,7 @@ import {
   User,
   Lock
 } from "lucide-react";
+import BrandMark from "./BrandMark";
 
 interface HeaderProps {
   isMinor: boolean;
@@ -43,12 +43,10 @@ export default function Header({ isMinor, onSearchChange }: HeaderProps) {
           {/* Logo & Brand Identity */}
           <div className="flex items-center gap-8">
             <Link to="/dashboard" className="flex items-center gap-3 group">
-              <div className="flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-500 via-amber-400 to-orange-500 shadow-sm group-hover:scale-105 transition-transform duration-200">
-                <Sparkles className="w-6 h-6 text-white" />
-              </div>
+              <div className="group-hover:scale-105 transition-transform duration-200"><BrandMark /></div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-2">
-                  <span className="text-2xl font-black tracking-tight text-stone-900 font-display">
+                    <span className="text-2xl font-black tracking-[0.08em] text-stone-900 font-display">
                     CRECE
                   </span>
                   <span className={`text-[11px] uppercase tracking-wider font-extrabold px-2.5 py-0.5 rounded-full ${
