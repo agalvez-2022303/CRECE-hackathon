@@ -27,7 +27,7 @@ import {
 const API = "/api";
 
 export default function DashboardPage() {
-  const { user } = useUser();
+  const { user, logout } = useUser();
   const navigate = useNavigate();
 
   const [matches, setMatches] = useState<MatchResult[]>([]);
@@ -52,18 +52,35 @@ export default function DashboardPage() {
           fetch(`${API}/users/${user!.id}/match`),
           fetch(`${API}/courses?userId=${user!.id}`),
         ]);
+        
+        if (!matchRes.ok || !courseRes.ok) {
+          logout();
+          navigate("/");
+          return;
+        }
+
         const matchData = await matchRes.json();
         const courseData = await courseRes.json();
-        setMatches(matchData);
-        setCourses(courseData);
+        
+        if (Array.isArray(matchData)) setMatches(matchData);
+        if (Array.isArray(courseData)) setCourses(courseData);
       } else {
         // Minors: personalized ranking based on interests
         const courseRes = await fetch(`${API}/courses/recommended/${user!.id}`);
+        
+        if (!courseRes.ok) {
+          logout();
+          navigate("/");
+          return;
+        }
+
         const courseData = await courseRes.json();
-        setCourses(courseData);
+        if (Array.isArray(courseData)) setCourses(courseData);
       }
     } catch (e) {
-      console.error(e);
+      console.error("Error loading data, logging out:", e);
+      logout();
+      navigate("/");
     } finally {
       setLoading(false);
     }
