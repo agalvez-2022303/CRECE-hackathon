@@ -24,26 +24,78 @@ export interface UserBadge {
   accentColor: string;
 }
 
+export interface WorkExperience {
+  id: string;
+  title: string;
+  company: string;
+  location?: string;
+  startDate: string;
+  endDate: string;
+  isCurrent: boolean;
+  description: string;
+  employmentType?: string;
+}
+
+export interface EducationEntry {
+  id: string;
+  institution: string;
+  degree: string;
+  field: string;
+  startDate: string;
+  endDate: string;
+  isCurrent: boolean;
+  description?: string;
+}
+
+export interface LanguageEntry {
+  name: string;
+  level: "Nativo" | "Avanzado" | "Intermedio" | "Básico";
+}
+
 export interface UserProfile {
   id: string;
   name: string;
+  lastName?: string;
   email: string;
   phone: string;
+  phoneAlt?: string;
   avatar: string;
   isSafeAvatar: boolean;
   headline: string;
+  summary?: string;
   age: number;
   isAdult: boolean;
+  birthDate?: string;
+  gender?: string;
+  maritalStatus?: string;
+  nationalId?: string;
   location: string;
+  municipality?: string;
+  department?: string;
+  address?: string;
+  willingToRelocate?: boolean;
+  hasVehicle?: boolean;
+  drivingLicenseType?: string;
   education: string;
   availability: string;
+  availabilityDetail?: string;
+  contractPreference?: string;
+  salaryExpectation?: string;
+  portfolioUrl?: string;
+  linkedinUrl?: string;
+  githubUrl?: string;
+  customSkills?: string[];
   skills: string[];
   interests: string[];
+  languages?: LanguageEntry[];
+  experiences?: WorkExperience[];
+  educationHistory?: EducationEntry[];
   isDemo: boolean;
   completedCoursesCount: number;
   badges: UserBadge[];
   certificates: UserCertificate[];
   activeApplicationsCount: number;
+  emergencyContact?: { name: string; phone: string; relation: string };
 }
 
 export interface Opportunity {

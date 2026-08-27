@@ -20,7 +20,8 @@ import {
   Award,
   Zap,
   BookOpen,
-  Compass
+  Compass,
+  Wrench
 } from "lucide-react";
 
 const API = "/api";
@@ -49,14 +50,15 @@ export default function DashboardPage() {
       if (user!.isAdult) {
         const [matchRes, courseRes] = await Promise.all([
           fetch(`${API}/users/${user!.id}/match`),
-          fetch(`${API}/courses`),
+          fetch(`${API}/courses?userId=${user!.id}`),
         ]);
         const matchData = await matchRes.json();
         const courseData = await courseRes.json();
         setMatches(matchData);
         setCourses(courseData);
       } else {
-        const courseRes = await fetch(`${API}/courses`);
+        // Minors: personalized ranking based on interests
+        const courseRes = await fetch(`${API}/courses/recommended/${user!.id}`);
         const courseData = await courseRes.json();
         setCourses(courseData);
       }
@@ -127,6 +129,20 @@ export default function DashboardPage() {
     );
   }, [filteredCourses]);
 
+  // Manual / Oficios Courses
+  const manualCourses = useMemo(() => {
+    return filteredCourses.filter((c) =>
+      c.tags.some((t) => ["manual", "cocina", "salud", "medicina", "electricidad", "mecanica", "carpinteria", "belleza", "agricultura", "panaderia", "gastronomia"].includes(t))
+    );
+  }, [filteredCourses]);
+
+  // For minors: top personalized picks (first 6 of sorted list)
+  const recommendedForMinor = useMemo(() => {
+    if (!isMinor) return [];
+    // courses already sorted by score from API
+    return filteredCourses.slice(0, 6);
+  }, [filteredCourses, isMinor]);
+
   const categories = [
     { id: "todos", label: "🌟 Todo el Catálogo" },
     { id: "tecnologia", label: "💻 Tecnología & IT" },
@@ -135,6 +151,9 @@ export default function DashboardPage() {
     { id: "diseño", label: "🎨 Creatividad & Diseño" },
     { id: "marketing", label: "📱 Marketing Digital" },
     { id: "idiomas", label: "🌐 Idiomas" },
+    { id: "cocina", label: "🍳 Cocina & Gastronomía" },
+    { id: "salud", label: "🩺 Salud & Medicina" },
+    { id: "manual", label: "🔧 Oficios Manuales" },
   ];
 
   if (!user) return null;
@@ -185,6 +204,41 @@ export default function DashboardPage() {
           </div>
         ) : (
           <div className="space-y-16">
+            {/* ── Recomendado para ti (solo menores, algoritmo personalizado) ── */}
+            {isMinor && recommendedForMinor.length > 0 && selectedCategory === "todos" && !searchTerm && (
+              <section className="relative">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-2.5">
+                    <div className="p-2.5 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 text-white">
+                      <Sparkles className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl sm:text-2xl font-black text-stone-900 font-display">
+                        ✨ Recomendado para ti — según tus intereses
+                      </h2>
+                      <p className="text-xs text-stone-500">
+                        Cursos ordenados por afinidad a {user?.interests.slice(0, 3).join(", ") || "tus intereses"} + oficios manuales
+                      </p>
+                    </div>
+                  </div>
+                  <span className="text-xs font-bold text-orange-800 bg-orange-100 border border-orange-300 px-3 py-1.5 rounded-full">
+                    Algoritmo personalizado
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {recommendedForMinor.map((course: any) => (
+                    <div key={course.id} className="relative">
+                      {course._score !== undefined && course._score > 30 && (
+                        <span className="absolute -top-2 -right-2 z-10 bg-emerald-500 text-white text-[10px] font-black px-2.5 py-1 rounded-full shadow">Match {course._score}</span>
+                      )}
+                      <CourseCard course={course} isMinor={isMinor} />
+                      {course._reason && <p className="text-[11px] text-emerald-700 font-bold mt-1 px-1">↳ {course._reason}</p>}
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+            
             
             {/* ────────────────────────────────────────────────────────── */}
             {/* MODO ADULTO: TOP MATCHES                                   */}
@@ -316,6 +370,35 @@ export default function DashboardPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {creativeAndBusinessCourses.map((course) => (
+                    <CourseCard key={course.id} course={course} isMinor={isMinor} />
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* ── OFICIOS MANUALES (cocina, salud, electricidad, etc.) ── */}
+            {manualCourses.length > 0 && (
+              <section className="relative">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-2.5">
+                    <div className="p-2.5 rounded-2xl bg-orange-100 text-orange-700">
+                      <Wrench className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl sm:text-2xl font-black text-stone-900 font-display">
+                        🔧 Oficios Manuales & Cursos Técnicos Presenciales
+                      </h2>
+                      <p className="text-xs text-stone-500">
+                        Cocina, salud, electricidad, mecánica, carpintería, belleza y agricultura — becas INTECAP 100% gratuitas
+                      </p>
+                    </div>
+                  </div>
+                  <span className="text-xs font-bold text-orange-800 bg-orange-100 border border-orange-300 px-3 py-1.5 rounded-full">
+                    {manualCourses.length} oficios
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {manualCourses.map((course) => (
                     <CourseCard key={course.id} course={course} isMinor={isMinor} />
                   ))}
                 </div>

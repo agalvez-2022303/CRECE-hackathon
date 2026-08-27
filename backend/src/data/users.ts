@@ -24,45 +24,125 @@ export interface UserBadge {
   accentColor: string;
 }
 
+export interface WorkExperience {
+  id: string;
+  title: string;
+  company: string;
+  location?: string;
+  startDate: string;
+  endDate: string; // "Actualidad" if current
+  isCurrent: boolean;
+  description: string;
+  employmentType?: string; // "Tiempo Completo" | "Medio Tiempo" | etc
+}
+
+export interface EducationEntry {
+  id: string;
+  institution: string;
+  degree: string;
+  field: string;
+  startDate: string;
+  endDate: string;
+  isCurrent: boolean;
+  description?: string;
+}
+
+export interface LanguageEntry {
+  name: string;
+  level: "Nativo" | "Avanzado" | "Intermedio" | "Básico";
+}
+
 export interface UserProfile {
   id: string;
   name: string;
+  lastName?: string;
   email: string;
   phone: string;
-  avatar: string; // illustration for minors, photo for adults
+  phoneAlt?: string;
+  avatar: string; // foto real (base64 o URL) o ilustración para menores
   isSafeAvatar: boolean;
   headline: string;
+  summary?: string; // resumen profesional CV
   age: number;
   isAdult: boolean;
+  birthDate?: string; // YYYY-MM-DD
+  gender?: string;
+  maritalStatus?: string;
+  nationalId?: string; // DPI
   location: string;
-  education: string;
+  municipality?: string;
+  department?: string;
+  address?: string;
+  willingToRelocate?: boolean;
+  hasVehicle?: boolean;
+  drivingLicenseType?: string;
+  education: string; // nivel resumido
   availability: string;
+  availabilityDetail?: string; // "Lunes a Viernes 8-5, Sábados medio día"
+  contractPreference?: string;
+  salaryExpectation?: string; // "Q3,500 - Q4,500" or "A convenir"
+  portfolioUrl?: string;
+  linkedinUrl?: string;
+  githubUrl?: string;
+  customSkills?: string[]; // habilidades "Otro" escritas por usuario
   skills: string[]; // skill IDs
   interests: string[]; // interest tags
+  languages?: LanguageEntry[];
+  experiences?: WorkExperience[];
+  educationHistory?: EducationEntry[];
   isDemo: boolean;
   completedCoursesCount: number;
   badges: UserBadge[];
   certificates: UserCertificate[];
   activeApplicationsCount: number;
+  emergencyContact?: { name: string; phone: string; relation: string };
 }
 
 // In-memory store (starts with two demo users)
 export const users: UserProfile[] = [
   {
     id: "demo-adult",
-    name: "María López Alvarado",
+    name: "María",
+    lastName: "López Alvarado",
     email: "maria.lopez@crece.gt",
     phone: "5555-0001",
+    phoneAlt: "5555-0002",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
     isSafeAvatar: false,
     headline: "Perito Contador · Buscando oportunidad en atención al cliente y administración",
+    summary: "Joven profesional con experiencia en atención al cliente y administración, orientada a resultados y servicio cálido. Busco incorporarme a empresa donde pueda aportar organización, manejo de herramientas digitales y crecimiento continuo.",
     age: 26,
     isAdult: true,
+    birthDate: "1999-05-14",
+    gender: "Femenino",
+    maritalStatus: "Soltera",
+    nationalId: "1234 56789 0101",
     location: "Zona 7, Ciudad de Guatemala",
+    municipality: "Guatemala",
+    department: "Guatemala",
+    address: "12 Avenida 3-45, Colonia La Verbena, Zona 7",
+    willingToRelocate: false,
+    hasVehicle: false,
+    drivingLicenseType: "",
     education: "Diversificado (Perito Contador)",
     availability: "Tiempo Completo",
+    availabilityDetail: "Lunes a Viernes 8:00-17:00, Sábados medio día",
+    contractPreference: "Contrato indefinido",
+    salaryExpectation: "Q4,000 - Q5,000",
+    portfolioUrl: "",
+    linkedinUrl: "https://linkedin.com/in/maria-lopez-gt",
+    customSkills: ["Resolución de conflictos"],
     skills: ["customer_service", "communication", "basic_computer", "organization", "teamwork"],
     interests: ["administracion", "ventas", "tecnologia", "comercio"],
+    languages: [{ name: "Español", level: "Nativo" }, { name: "Inglés", level: "Intermedio" }],
+    experiences: [
+      { id: "exp1", title: "Asistente de Caja y Atención", company: "Tienda La Económica", location: "Zona 1, Guatemala", startDate: "2023-02", endDate: "2024-08", isCurrent: false, description: "Atención a clientes, manejo de POS, cuadre de caja diario y control de inventario.", employmentType: "Tiempo Completo" },
+      { id: "exp2", title: "Practicante Contable", company: "Servicios Contables Marroquín", location: "Zona 9, Guatemala", startDate: "2022-06", endDate: "2023-01", isCurrent: false, description: "Apoyo en digitación contable, archivo y elaboración de reportes en Excel.", employmentType: "Medio Tiempo" }
+    ],
+    educationHistory: [
+      { id: "edu1", institution: "Instituto Privado Guatemala", degree: "Perito Contador", field: "Ciencias Económicas", startDate: "2017", endDate: "2019", isCurrent: false },
+      { id: "edu2", institution: "INTECAP", degree: "Diplomado", field: "Atención al Cliente", startDate: "2024", endDate: "2024", isCurrent: false, description: "40 horas - Excelencia en servicio" }
+    ],
     isDemo: true,
     completedCoursesCount: 3,
     activeApplicationsCount: 1,
@@ -130,20 +210,36 @@ export const users: UserProfile[] = [
   },
   {
     id: "demo-minor",
-    name: "Diego A.", // Alias seguro para menor
+    name: "Diego",
+    lastName: "A.",
     email: "diego.estudiante@crece.gt",
     phone: "Confidencial (Protegido)",
     // Avatar ilustrado seguro sin rostro real de menor
     avatar: "https://api.dicebear.com/7.x/bottts-neutral/svg?seed=DiegoGT&backgroundColor=b6e3f4,c0aede,d1d4f9",
     isSafeAvatar: true,
     headline: "Estudiante de Básicos · Desarrollando habilidades en código y diseño digital",
+    summary: "Estudiante curioso y creativo, me apasiona la tecnología y el diseño. Busco becas para desarrollar mi portafolio y preparar mi futuro profesional sin necesidad de exponer datos sensibles.",
     age: 16,
     isAdult: false,
+    birthDate: "2010-03-22",
+    gender: "Masculino",
     location: "Quetzaltenango (Altiplano)",
+    municipality: "Quetzaltenango",
+    department: "Quetzaltenango",
+    address: "Quetzaltenango",
+    willingToRelocate: false,
+    hasVehicle: false,
     education: "Tercero Básico (en curso)",
     availability: "Medio Tiempo / Fines de semana",
+    availabilityDetail: "Tardes y fines de semana (después de clases)",
+    customSkills: [],
     skills: [],
-    interests: ["tecnologia", "diseño", "programacion", "emprendimiento"],
+    interests: ["tecnologia", "diseño", "programacion", "emprendimiento", "cocina", "salud"],
+    languages: [{ name: "Español", level: "Nativo" }],
+    experiences: [],
+    educationHistory: [
+      { id: "edu-m1", institution: "Instituto Básico de Occidente", degree: "Tercero Básico", field: "Educación Básica", startDate: "2024", endDate: "Actualidad", isCurrent: true, description: "Promedio destacado en computación y artes" }
+    ],
     isDemo: true,
     completedCoursesCount: 2,
     activeApplicationsCount: 0,

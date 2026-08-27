@@ -81,35 +81,59 @@ router.post("/login", (req: Request, res: Response) => {
 });
 
 // ── POST /api/users ──────────────────────────────────────────────────────
-// Create/update a user profile (onboarding)
+// Create/update a user profile (onboarding CV completo)
 router.post("/", (req: Request, res: Response) => {
-  const data = req.body as Partial<UserProfile>;
+  const data = req.body as Partial<UserProfile> & { isAdult?: boolean };
   if (!data.id) {
     res.status(400).json({ error: "ID de usuario requerido" });
     return;
   }
 
   const idx = users.findIndex((u) => u.id === data.id);
-  const isAdultVal = (data.age ?? 0) >= 18;
+  // Respect explicit isAdult if provided, otherwise infer from age
+  const isAdultVal = typeof data.isAdult === "boolean" ? data.isAdult : (data.age ?? 0) >= 18;
 
   if (idx === -1) {
     const newUser: UserProfile = {
       id: data.id,
       name: data.name ?? "Joven CRECE",
+      lastName: data.lastName,
       email: data.email ?? `user-${Date.now()}@crece.gt`,
       phone: data.phone ?? "5555-0000",
+      phoneAlt: data.phoneAlt,
       avatar: data.avatar ?? (isAdultVal
         ? "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
         : "https://api.dicebear.com/7.x/bottts-neutral/svg?seed=DiegoGT&backgroundColor=b6e3f4"),
-      isSafeAvatar: !isAdultVal,
+      isSafeAvatar: data.isSafeAvatar ?? !isAdultVal,
       headline: data.headline ?? (isAdultVal ? "Buscando oportunidades de empleo formal" : "Desarrollando nuevas habilidades y cursos"),
+      summary: data.summary,
       age: data.age ?? 18,
+      birthDate: data.birthDate,
+      gender: data.gender,
+      maritalStatus: data.maritalStatus,
+      nationalId: data.nationalId,
       isAdult: isAdultVal,
       location: data.location ?? "Guatemala",
+      municipality: data.municipality,
+      department: data.department,
+      address: data.address,
+      willingToRelocate: data.willingToRelocate,
+      hasVehicle: data.hasVehicle,
+      drivingLicenseType: data.drivingLicenseType,
       education: data.education ?? "Diversificado",
       availability: data.availability ?? (isAdultVal ? "Tiempo Completo" : "Medio Tiempo"),
+      availabilityDetail: data.availabilityDetail,
+      contractPreference: data.contractPreference,
+      salaryExpectation: data.salaryExpectation,
+      portfolioUrl: data.portfolioUrl,
+      linkedinUrl: data.linkedinUrl,
+      githubUrl: data.githubUrl,
+      customSkills: data.customSkills ?? [],
       skills: data.skills ?? [],
       interests: data.interests ?? ["tecnologia", "administracion"],
+      languages: data.languages ?? [{ name: "Español", level: "Nativo" }],
+      experiences: data.experiences ?? [],
+      educationHistory: data.educationHistory ?? [],
       isDemo: false,
       completedCoursesCount: 0,
       activeApplicationsCount: 0,
@@ -124,16 +148,26 @@ router.post("/", (req: Request, res: Response) => {
           accentColor: "emerald"
         }
       ],
-      certificates: data.certificates ?? []
+      certificates: data.certificates ?? [],
+      emergencyContact: data.emergencyContact,
     };
     users.push(newUser);
     res.status(201).json(newUser);
   } else {
-    const updated = {
-      ...users[idx],
+    // Merge update, keep existing badges/certificates if not provided
+    const existing = users[idx];
+    const updated: UserProfile = {
+      ...existing,
       ...data,
-      isAdult: (data.age ?? users[idx].age) >= 18,
-      isSafeAvatar: (data.age ?? users[idx].age) < 18
+      // Explicit handling for arrays to avoid overwriting with undefined
+      customSkills: data.customSkills ?? existing.customSkills,
+      skills: data.skills ?? existing.skills,
+      interests: data.interests ?? existing.interests,
+      languages: data.languages ?? existing.languages,
+      experiences: data.experiences ?? existing.experiences,
+      educationHistory: data.educationHistory ?? existing.educationHistory,
+      isAdult: typeof data.isAdult === "boolean" ? data.isAdult : (data.age ?? existing.age) >= 18,
+      isSafeAvatar: typeof data.isSafeAvatar === "boolean" ? data.isSafeAvatar : (typeof data.isAdult === "boolean" ? !data.isAdult : (data.age ?? existing.age) < 18),
     };
     users[idx] = updated;
     res.json(updated);
@@ -160,10 +194,17 @@ router.get("/:id/match", (req: Request, res: Response) => {
     return;
   }
 
+  const allUserSkills = [...(user.skills || []), ...(user.customSkills || []).map(s => s.toLowerCase().trim())];
+  const normalizeSkill = (s: string) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+  const allUserSkillsNorm = allUserSkills.map(normalizeSkill);
+
   const results = opportunities.map((op) => {
     const totalReqs = op.requirements.length;
-    const matched = op.requirements.filter((r) => user.skills.includes(r));
-    const missing = op.requirements.filter((r) => !user.skills.includes(r));
+    const matched = op.requirements.filter((r) => {
+      const rNorm = normalizeSkill(r);
+      return allUserSkillsNorm.includes(rNorm) || allUserSkillsNorm.some(us => us.includes(rNorm) || rNorm.includes(us));
+    });
+    const missing = op.requirements.filter((r) => !matched.includes(r));
     const matchPct = totalReqs === 0 ? 100 : Math.round((matched.length / totalReqs) * 100);
 
     // Find recommended courses for missing skills
