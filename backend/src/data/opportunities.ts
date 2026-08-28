@@ -28,6 +28,13 @@ export interface Opportunity {
   requirements: string[]; // skill IDs
   requirementLabels: string[]; // display names
   hiringProcess: string[];
+  lat?: number;
+  lon?: number;
+  mapUrl?: string;
+  liveUrlLinkedin?: string;
+  liveUrlComputrabajo?: string;
+  rating?: number;
+  reviewsCount?: number;
 }
 
 export const opportunities: Opportunity[] = [
@@ -67,7 +74,14 @@ export const opportunities: Opportunity[] = [
       "Postulación en 1 clic en CRECE",
       "Entrevista rápida de 15 minutos (virtual o presencial)",
       "Inducción guiada e inicio de labores"
-    ]
+    ],
+    lat: 14.592,
+    lon: -90.5108,
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=14.592,-90.5108",
+    liveUrlLinkedin: "https://www.linkedin.com/jobs/search/?keywords=Atencion%20al%20Cliente&location=Guatemala",
+    liveUrlComputrabajo: "https://www.computrabajo.com.gt/trabajo-de-atencion-al-cliente",
+    rating: 4.8,
+    reviewsCount: 14
   },
   {
     id: "op2",
@@ -104,7 +118,14 @@ export const opportunities: Opportunity[] = [
       "Revisión de perfil CRECE",
       "Prueba práctica sencilla de Excel en línea",
       "Entrevista con el socio fundador y bienvenida"
-    ]
+    ],
+    lat: 14.600,
+    lon: -90.5140,
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=14.600,-90.5140",
+    liveUrlLinkedin: "https://www.linkedin.com/jobs/search/?keywords=Asistente%20Administrativo&location=Guatemala",
+    liveUrlComputrabajo: "https://www.computrabajo.com.gt/trabajo-de-asistente-administrativo",
+    rating: 4.9,
+    reviewsCount: 9
   },
   {
     id: "op3",
@@ -141,7 +162,14 @@ export const opportunities: Opportunity[] = [
       "Contacto directo por WhatsApp de talento humano",
       "Demostración guiada de producto",
       "Asignación de zona e inicio con acompañamiento"
-    ]
+    ],
+    lat: 14.842,
+    lon: -91.5180,
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=14.842,-91.5180",
+    liveUrlLinkedin: "https://www.linkedin.com/jobs/search/?keywords=Ventas&location=Guatemala",
+    liveUrlComputrabajo: "https://www.computrabajo.com.gt/trabajo-de-ventas",
+    rating: 4.7,
+    reviewsCount: 22
   },
   {
     id: "op4",
@@ -178,7 +206,14 @@ export const opportunities: Opportunity[] = [
       "Postulación en CRECE",
       "Desafío práctico guiado en laboratorio virtual",
       "Entrevista con el líder de ingeniería e incorporación"
-    ]
+    ],
+    lat: 14.596,
+    lon: -90.5090,
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=14.596,-90.5090",
+    liveUrlLinkedin: "https://www.linkedin.com/jobs/search/?keywords=Soporte%20IT&location=Guatemala",
+    liveUrlComputrabajo: "https://www.computrabajo.com.gt/trabajo-de-soporte-tecnico",
+    rating: 4.9,
+    reviewsCount: 18
   },
   {
     id: "op5",
@@ -215,7 +250,14 @@ export const opportunities: Opportunity[] = [
       "Revisión de solicitud",
       "Prueba de manejo y pericia en finca",
       "Examen médico ocupacional y contratación"
-    ]
+    ],
+    lat: 14.305,
+    lon: -90.7850,
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=14.305,-90.7850",
+    liveUrlLinkedin: "https://www.linkedin.com/jobs/search/?keywords=Maquinaria&location=Guatemala",
+    liveUrlComputrabajo: "https://www.computrabajo.com.gt/trabajo-de-operador",
+    rating: 4.6,
+    reviewsCount: 8
   },
   {
     id: "op6",
@@ -252,7 +294,14 @@ export const opportunities: Opportunity[] = [
       "Envío de muestras de contenido o perfil de redes",
       "Prueba de creatividad rápida de 24h",
       "Bienvenida al equipo creativo"
-    ]
+    ],
+    lat: 14.8446,
+    lon: -91.5199,
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=14.8446,-91.5199",
+    liveUrlLinkedin: "https://www.linkedin.com/jobs/search/?keywords=Community%20Manager&location=Guatemala",
+    liveUrlComputrabajo: "https://www.computrabajo.com.gt/trabajo-de-community-manager",
+    rating: 5.0,
+    reviewsCount: 11
   },
   {
     id: "op7",
@@ -289,7 +338,14 @@ export const opportunities: Opportunity[] = [
       "Registro en CRECE",
       "Visita y recorrido al centro logístico",
       "Firma de contrato e inicio de turno"
-    ]
+    ],
+    lat: 14.5259,
+    lon: -90.5869,
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=14.5259,-90.5869",
+    liveUrlLinkedin: "https://www.linkedin.com/jobs/search/?keywords=Logistica&location=Guatemala",
+    liveUrlComputrabajo: "https://www.computrabajo.com.gt/trabajo-de-logistica",
+    rating: 4.7,
+    reviewsCount: 15
   },
   {
     id: "op8",
@@ -326,7 +382,14 @@ export const opportunities: Opportunity[] = [
       "Postulación en CRECE",
       "Charla breve en inglés para evaluar fluidez conversacional",
       "Jornada de inducción en hotel"
-    ]
+    ],
+    lat: 14.5586,
+    lon: -90.7295,
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=14.5586,-90.7295",
+    liveUrlLinkedin: "https://www.linkedin.com/jobs/search/?keywords=Recepcionista&location=Guatemala",
+    liveUrlComputrabajo: "https://www.computrabajo.com.gt/trabajo-de-recepcionista",
+    rating: 4.9,
+    reviewsCount: 30
   },
   {
     id: "op9",
@@ -363,7 +426,14 @@ export const opportunities: Opportunity[] = [
       "Envío de portafolio o proyectos personales",
       "Ejercicio práctico de diseño de etiqueta",
       "Entrevista creativa y contratación"
-    ]
+    ],
+    lat: 14.596,
+    lon: -90.509,
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=14.596,-90.509",
+    liveUrlLinkedin: "https://www.linkedin.com/jobs/search/?keywords=Disenador%20Grafico&location=Guatemala",
+    liveUrlComputrabajo: "https://www.computrabajo.com.gt/trabajo-de-disenador-grafico",
+    rating: 4.8,
+    reviewsCount: 12
   },
   {
     id: "op10",
@@ -400,6 +470,13 @@ export const opportunities: Opportunity[] = [
       "Prueba de velocidad de tipeo en 3 minutos",
       "Breve entrevista de motivación",
       "Capacitación de 3 días e inicio inmediato"
-    ]
+    ],
+    lat: 14.6335,
+    lon: -90.6064,
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=14.6335,-90.6064",
+    liveUrlLinkedin: "https://www.linkedin.com/jobs/search/?keywords=Digitador&location=Guatemala",
+    liveUrlComputrabajo: "https://www.computrabajo.com.gt/trabajo-de-digitador",
+    rating: 4.6,
+    reviewsCount: 16
   }
 ];

@@ -15,8 +15,6 @@ import {
   Zap, 
   GraduationCap, 
   Briefcase, 
-  Star,
-  Award,
   Lock
 } from "lucide-react";
 import type { UserProfile } from "../types";
@@ -96,33 +94,61 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <div className="hidden sm:flex items-center gap-2 bg-amber-100/80 border border-amber-300 px-4 py-2 rounded-full text-xs font-extrabold text-amber-900 shadow-sm">
-          <Award className="w-4 h-4 text-amber-700" />
-          <span>Demo Hackathon 2026 · Acceso Inmediato</span>
+        <div className="hidden sm:flex items-center gap-2 bg-white/80 border border-stone-200 px-4 py-2 rounded-full text-xs font-bold text-stone-700 shadow-sm">
+          <ShieldCheck className="w-4 h-4 text-emerald-600" />
+          <span>Oportunidades verificadas para jóvenes</span>
         </div>
       </header>
 
       {/* Main Center Content */}
-      <main className="max-w-4xl mx-auto w-full px-4 sm:px-6 py-8 flex flex-col items-center justify-center">
+      <main className="max-w-6xl mx-auto w-full px-4 sm:px-6 py-8 lg:py-12 grid lg:grid-cols-[0.84fr_1.16fr] gap-8 lg:gap-14 items-center">
+        {/* Brand story: intentionally prominent, without competing with the journey. */}
+        <motion.aside
+          initial={{ opacity: 0, x: -16 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          className="hidden lg:flex relative min-h-[620px] overflow-hidden rounded-[2rem] border border-[#C6CCBD] bg-[#EEF2EA] p-8 flex-col justify-end shadow-soft-card"
+        >
+          <div className="absolute inset-x-0 top-0 h-[390px] overflow-hidden border-b border-[#DDE1D4] bg-white">
+            <img
+              src="/crece-illustrated-logo.jpeg"
+              alt="CRECE: evolución, aprendizaje y oportunidades"
+              className="w-full h-full object-cover scale-[1.55] translate-y-[5%]"
+            />
+            <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white to-transparent" />
+          </div>
+          <div className="relative pt-[345px]">
+            <span className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-orange-700">Crecer tiene muchos caminos</span>
+            <h2 className="mt-3 text-3xl font-black leading-tight text-stone-900 font-display">Aprender. Avanzar. Encontrar tu lugar.</h2>
+            <p className="mt-4 text-sm leading-relaxed text-stone-600">CRECE conecta formación gratuita y empleo inicial para que cada joven pueda dar un siguiente paso claro.</p>
+            <div className="mt-7 flex items-center gap-5 border-t border-stone-200 pt-5 text-xs text-stone-600">
+              <span><strong className="block text-base text-stone-900">100%</strong> gratuito</span>
+              <span className="h-8 w-px bg-stone-200" />
+              <span><strong className="block text-base text-stone-900">GT</strong> oportunidades locales</span>
+            </div>
+          </div>
+        </motion.aside>
+
+        <section className="flex flex-col items-center justify-center">
         
         {/* Pitch Headline */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="text-center max-w-2xl mx-auto mb-10"
+          className="text-center lg:text-left max-w-2xl lg:mx-0 mb-8"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100 text-orange-800 text-xs font-extrabold mb-4 border border-orange-200">
-            <Star className="w-4 h-4 text-orange-600 fill-orange-600" />
-            La plataforma líder de talento joven en Guatemala
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold mb-4 border border-emerald-200">
+            <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+            Empleo y formación para tu siguiente paso
           </div>
           
           <h1 className="text-4xl sm:text-5xl font-black text-stone-900 tracking-tight font-display leading-[1.15] mb-4">
-            Aprende habilidades gratis y <span className="text-orange-600 underline decoration-amber-400 decoration-wavy">conéctate con empleo</span>
+            Tu próximo paso empieza <span className="text-orange-600">aquí</span>
           </h1>
           
           <p className="text-stone-600 text-base sm:text-lg leading-relaxed font-normal">
-            Descubre vacantes con cálculo de compatibilidad en tiempo real y accede a más de 15 becas certificadas 100% gratuitas.
+            Encuentra becas, cursos y oportunidades laborales pensadas para jóvenes de Guatemala. Sin costo y con rutas claras para avanzar.
           </p>
         </motion.div>
 
@@ -137,10 +163,10 @@ export default function LoginPage() {
             >
               <div className="text-center mb-6">
                 <h2 className="text-xl font-black text-stone-900 font-display mb-1">
-                  Selecciona tu usuario de prueba
+                  Elige cómo quieres explorar CRECE
                 </h2>
                 <p className="text-xs sm:text-sm text-stone-500">
-                  Ingresa con un perfil precargado para explorar todo el sistema en segundos:
+                  Usa un perfil de ejemplo para conocer la experiencia completa:
                 </p>
               </div>
 
@@ -344,12 +370,13 @@ export default function LoginPage() {
             </motion.form>
           )}
         </div>
+        </section>
       </main>
 
       {/* Footer Branding */}
       <footer className="max-w-7xl mx-auto w-full px-6 py-6 text-center text-xs text-stone-500">
         <p>
-          CRECE Guatemala 🇬🇹 · Proyecto de impacto social y empleabilidad juvenil · 100% Gratuito
+          CRECE Guatemala 🇬🇹 · Formación y empleo para impulsar talento joven · 100% gratuito
         </p>
       </footer>
     </div>

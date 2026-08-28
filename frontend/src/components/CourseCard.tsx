@@ -34,6 +34,9 @@ export default function CourseCard({ course, isMinor = false }: CourseCardProps)
           <img
             src={course.heroImage}
             alt={course.title}
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=1000&q=80";
+            }}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
 

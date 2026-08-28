@@ -40,6 +40,9 @@ export default function MatchCard({ match, onClick }: MatchCardProps) {
           <img
             src={op.heroImage}
             alt={op.title}
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=800&q=80";
+            }}
             className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
           />
           

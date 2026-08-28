@@ -124,6 +124,13 @@ export interface Opportunity {
   requirements: string[];
   requirementLabels: string[];
   hiringProcess: string[];
+  lat?: number;
+  lon?: number;
+  mapUrl?: string;
+  liveUrlLinkedin?: string;
+  liveUrlComputrabajo?: string;
+  rating?: number;
+  reviewsCount?: number;
 }
 
 export interface Course {

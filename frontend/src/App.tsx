@@ -1,5 +1,5 @@
 // ──────────────────────────────────────────────
-// CRECE — App.tsx (Router con ruta de Perfil)
+// CRECE — App.tsx (Router con ruta de Perfil y Mi Ruta)
 // ──────────────────────────────────────────────
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { UserProvider, useUser } from "./context/UserContext";
@@ -8,6 +8,7 @@ import DashboardPage from "./pages/DashboardPage";
 import OnboardingPage from "./pages/OnboardingPage";
 import OpportunityDetailPage from "./pages/OpportunityDetailPage";
 import ProfilePage from "./pages/ProfilePage";
+import MyRoutePage from "./pages/MyRoutePage";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user } = useUser();
@@ -37,6 +38,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/route"
+        element={
+          <ProtectedRoute>
+            <MyRoutePage />
           </ProtectedRoute>
         }
       />

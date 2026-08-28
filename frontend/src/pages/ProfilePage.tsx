@@ -122,6 +122,9 @@ export default function ProfilePage() {
                 <img
                   src={editing ? editAvatar : user.avatar}
                   alt={user.name}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "https://api.dicebear.com/7.x/bottts-neutral/svg?seed=CreceProfile";
+                  }}
                   className={`w-36 h-36 sm:w-44 sm:h-44 rounded-3xl object-cover ring-4 shadow-md ${isMinor ? "ring-amber-300 bg-amber-50 p-1" : "ring-emerald-400 bg-white"}`}
                 />
                 <span className="absolute -bottom-1 -right-1 flex items-center justify-center w-7 h-7 bg-emerald-600 rounded-full text-white ring-2 ring-white text-xs font-black">✓</span>
